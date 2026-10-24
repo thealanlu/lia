@@ -2,13 +2,13 @@
 
 ## Identity
 
-Use **LIA Language School** in page copy and metadata. Retain the original supplied seal and the white version in the navy footer. The centered header and prominent Request Info action are intentional.
+Use **LIA Language School** in page copy and metadata. Retain the original supplied seal and the white version in the navy footer. The centered header and prominent Inquire action are intentional.
 
-The school details were supplied by the owner on 30 September 2026. Verify additions against an approved source. Do not infer policies or institutional claims from the original academy name printed in the logo.
+The owner confirmed on 24 October 2026 that **LIA Language School** is the legal full name and **Logos International Academy** is the academy name. English, Thai, Korean, and Chinese are the four language offerings. Keep these balanced and primary; LCA academic cooperation is a distinct, secondary pathway. Cooperation and registration documents have not been supplied for this refinement. Verify additions against an approved source. Do not infer policies or institutional claims from the original academy name printed in the logo.
 
 ## Design
 
-- Georgia for display headings; Arial for readable body text.
+- Georgia for display headings; Montserrat for body text.
 - Navy, warm white, and a restrained blue-grey accent.
 - Generous spacing, consistent rounded photo frames, and clear navigation.
 - Smooth page dissolves and scroll reveals with reduced-motion support.

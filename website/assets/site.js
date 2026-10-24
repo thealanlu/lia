@@ -246,7 +246,7 @@ if (form) {
   form.addEventListener('submit', async event => {
     // GitHub Pages has no server; a normal POST avoids cross-origin fetch restrictions.
     if (location.hostname.endsWith('.github.io')) {
-      form.action = 'https://logos-international-academy.netlify.app/inquire/?sent=1';
+      form.action = 'https://logos-international-academy.netlify.app/request-info/?sent=1';
       return;
     }
     event.preventDefault();
@@ -260,7 +260,7 @@ if (form) {
     button.textContent = 'Sending…';
     status.hidden = true;
     try {
-      const response = await fetch('https://logos-international-academy.netlify.app/inquire/', {
+      const response = await fetch('https://logos-international-academy.netlify.app/request-info/', {
         method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'},
         body:new URLSearchParams(new FormData(form)).toString(),
         signal:AbortSignal.timeout(20000)

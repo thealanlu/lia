@@ -39,17 +39,17 @@ for page in site.rglob("*.html"):
     parser.metadata = {}
     parser.feed(page.read_text())
     if page.relative_to(site).as_posix() == "request-info/index.html":
-        assert parser.canonical == ["https://alanlu439.github.io/lia/inquire/"]
+        assert parser.canonical == ["https://thealanlu.github.io/lia/inquire/"]
         assert 'url=../inquire/' in page.read_text()
         continue
     route = page.parent.relative_to(site).as_posix()
-    canonical = "https://alanlu439.github.io/lia/" + ("" if route == "." else route + "/")
+    canonical = "https://thealanlu.github.io/lia/" + ("" if route == "." else route + "/")
     assert parser.canonical == [canonical], f"Incorrect canonical URL in {page}"
     assert parser.metadata.get("og:url") == canonical
     assert parser.metadata.get("og:title") and parser.metadata.get("og:description")
     assert parser.metadata.get("twitter:card") == "summary_large_image"
     image = urlsplit(parser.metadata.get("og:image", ""))
-    assert image.netloc == "alanlu439.github.io" and image.path.startswith("/lia/assets/")
+    assert image.netloc == "thealanlu.github.io" and image.path.startswith("/lia/assets/")
     assert (site / image.path.removeprefix("/lia/")).is_file(), f"Missing sharing image in {page}"
     canonical_urls.add(canonical)
 

@@ -5,13 +5,13 @@
 <h1 align="center">LIA Language School</h1>
 <p align="center">Website source and publishing tools · Chiang Mai, Thailand</p>
 <p align="center">
-  <a href="https://alanlu439.github.io/lia/">GitHub Pages</a> ·
+  <a href="https://thealanlu.github.io/lia/">GitHub Pages</a> ·
   <a href="docs/maintenance.md">Maintenance guide</a>
 </p>
 
 ## About this repository
 
-This repository maintains the five-page LIA Language School website: **Home, Admission, Inquire, Serve, and About**. It contains the school-supplied branding, approved content, photography, and the tools used to publish the site.
+This repository maintains the five-page LIA Language School website: **Home, Admission, Inquire, Serve, and About**. It presents English, Thai, Korean, and Chinese language education in a Christian learning community, with LCA academic cooperation as a distinct pathway. It contains the school-supplied branding, content, photography, and publishing tools.
 
 The website uses plain HTML, CSS, and JavaScript. No application framework or dependency installation is required.
 
@@ -25,7 +25,7 @@ The website uses plain HTML, CSS, and JavaScript. No application framework or de
 - An inquiry form, school contact links, and a Lighthouse Christian Academy partnership section.
 - Reduced-motion support and keyboard navigation.
 
-The inquiry page is now [`/inquire/`](https://alanlu439.github.io/lia/inquire/). The previous `/request-info/` address redirects there.
+The inquiry page is now [`/inquire/`](https://thealanlu.github.io/lia/inquire/). The previous `/request-info/` address redirects there.
 
 ## Project structure
 
