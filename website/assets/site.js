@@ -225,6 +225,9 @@ if (opening) {
 }
 const form = document.querySelector('#inquiry-form');
 if (form) {
+  const category = form.querySelector('#inquiry-category');
+  const requestedCategory = new URLSearchParams(location.search).get('category');
+  if (category && [...category.options].some(option => option.value === requestedCategory)) category.value = requestedCategory;
   const phone = form.querySelector('#phone');
   const method = form.querySelector('#contact-method');
   // Use the established message field until the category schema is registered on the form host.
@@ -464,4 +467,73 @@ if (breadcrumb && breadcrumbSlot) {
   window.addEventListener('pageshow', scheduleBreadcrumb);
   if ('ResizeObserver' in window) new ResizeObserver(scheduleBreadcrumb).observe(header);
   scheduleBreadcrumb();
+}
+
+// Explicit language selection turns pages without autoplay or hiding the four choices.
+const languageExplorer = document.querySelector('[data-language-explorer]');
+if (languageExplorer) {
+  const tabs = [...languageExplorer.querySelectorAll('[role=tab]')];
+  const pages = [...languageExplorer.querySelectorAll('[role=tabpanel]')];
+  const position = languageExplorer.querySelector('.language-page-position');
+  let selected = 0, turn = 0;
+  const settlePages = () => pages.forEach((page, index) => {
+    page.getAnimations().forEach(animation => animation.cancel());
+    page.hidden = index !== selected;
+    page.inert = index !== selected;
+    page.setAttribute('aria-hidden', String(index !== selected));
+  });
+  const chooseLanguage = (index, focusTab = false) => {
+    index = (index + pages.length) % pages.length;
+    if (index === selected) { if (focusTab) tabs[index].focus(); return; }
+    const previous = selected, thisTurn = ++turn;
+    selected = index;
+    settlePages();
+    tabs.forEach((tab, i) => { tab.setAttribute('aria-selected', String(i === selected)); tab.tabIndex = i === selected ? 0 : -1; });
+    position.textContent = `${pages[selected].querySelector('h3').textContent.trim()} · ${selected + 1} of ${pages.length}`;
+    if (focusTab) tabs[selected].focus();
+    if (motionPreference.matches || !pages[selected].animate) return;
+    pages[previous].hidden = false;
+    const outgoing = pages[previous].animate([{transform:'rotateX(0deg)',opacity:1},{transform:'rotateX(-88deg)',opacity:0}],{duration:220,easing:'cubic-bezier(.4,0,1,1)',fill:'forwards'});
+    const incoming = pages[selected].animate([{transform:'rotateX(88deg)',opacity:0},{transform:'rotateX(0deg)',opacity:1}],{duration:380,delay:160,easing:'cubic-bezier(.16,1,.3,1)',fill:'backwards'});
+    Promise.allSettled([outgoing.finished,incoming.finished]).then(() => { if (turn === thisTurn) settlePages(); });
+  };
+  languageExplorer.dataset.enhanced = '';
+  settlePages();
+  tabs.forEach((tab,index) => {
+    tab.addEventListener('click', () => chooseLanguage(index));
+    tab.addEventListener('keydown', event => {
+      let target;
+      if (event.key === 'ArrowRight') target = selected + 1;
+      else if (event.key === 'ArrowLeft') target = selected - 1;
+      else if (event.key === 'Home') target = 0;
+      else if (event.key === 'End') target = tabs.length - 1;
+      else return;
+      event.preventDefault(); chooseLanguage(target,true);
+    });
+  });
+  languageExplorer.querySelector('[data-language-prev]').addEventListener('click', () => chooseLanguage(selected-1));
+  languageExplorer.querySelector('[data-language-next]').addEventListener('click', () => chooseLanguage(selected+1));
+  let touchStart, suppressSwipeClick = false;
+  const stage = languageExplorer.querySelector('.language-page-stage');
+  const sizeLanguagePages = () => {
+    ++turn; settlePages();
+    stage.style.removeProperty('min-height');
+    pages.forEach(page => { page.hidden = false; });
+    stage.style.minHeight = `${Math.max(...pages.map(page => page.offsetHeight))}px`;
+    settlePages();
+  };
+  sizeLanguagePages();
+  document.fonts.ready.then(sizeLanguagePages);
+  window.addEventListener('resize', () => requestAnimationFrame(sizeLanguagePages), {passive:true});
+  stage.addEventListener('pointerdown', event => { suppressSwipeClick = false; if (event.pointerType === 'touch') touchStart = {x:event.clientX,y:event.clientY}; });
+  stage.addEventListener('pointerup', event => {
+    if (!touchStart || event.pointerType !== 'touch') return;
+    const dx = event.clientX-touchStart.x, dy = event.clientY-touchStart.y;
+    touchStart = null;
+    if (Math.abs(dx)>50 && Math.abs(dy)<60) { suppressSwipeClick = true; chooseLanguage(selected+(dx<0?1:-1)); }
+  });
+  stage.addEventListener('pointercancel', () => { touchStart = null; });
+  stage.addEventListener('keydown', () => { suppressSwipeClick = false; });
+  stage.addEventListener('click', event => { if (suppressSwipeClick) { event.preventDefault(); event.stopPropagation(); suppressSwipeClick = false; } }, true);
+  motionPreference.addEventListener('change', () => { ++turn; settlePages(); });
 }

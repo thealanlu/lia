@@ -757,3 +757,30 @@ html.page-arriving::after{opacity:1;pointer-events:auto;transition:none}
 /* Decorative flag accents; language names remain the accessible labels. */
 .language-pathway .official-list dt{display:flex;align-items:center;gap:12px}
 .language-flag{display:inline-block;flex-shrink:0;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;font-size:1.6rem;line-height:1}
+
+/* User-controlled language pages, with a clean paper-flip transition. */
+.language-explorer{min-width:0}
+.language-tabs,.language-page-controls{display:none}
+.language-page-stage{perspective:1400px;touch-action:pan-y}
+.language-page{padding:clamp(26px,3.2vw,44px);border:1px solid #cbd7e5;border-radius:22px;background:linear-gradient(#fffefb,#eef3f8);margin-bottom:18px;backface-visibility:hidden;transform-origin:center top;box-shadow:0 5px 0 -2px #dce5ef}
+.language-page .eyebrow{color:#657a96;font-size:.65rem;letter-spacing:.14em;margin-bottom:24px}
+.language-page-heading{display:flex;align-items:center;gap:16px;margin-bottom:24px}
+.language-page-heading h3{font-size:clamp(2.1rem,3.8vw,3.2rem);line-height:1.1;color:var(--navy)}
+.language-page-flag{font:2.4rem/1 "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
+.language-page p{font-size:1rem;line-height:1.8;max-width:34ch}
+.language-page .text-link{margin-top:32px;font-size:.8rem}
+.language-explorer[data-enhanced] .language-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:24px}
+.language-tabs button{display:flex;align-items:center;justify-content:center;gap:7px;min-height:46px;padding:10px 8px;border:1px solid #cbd7e5;border-radius:12px;background:transparent;color:var(--navy);font-size:.75rem;font-weight:600}
+.language-tabs button[aria-selected=true]{background:var(--navy);border-color:var(--navy);color:var(--paper)}
+.language-tabs button:hover{box-shadow:0 0 0 2px #052c6012}
+.language-tabs button span{font:1.05rem/1 "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
+.language-explorer[data-enhanced] .language-page-stage{display:grid;min-height:350px}
+.language-explorer[data-enhanced] .language-page{grid-area:1/1;margin:0}
+.language-page[hidden]{display:none!important}
+.language-explorer[data-enhanced] .language-page-controls{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:24px}
+.language-page-controls button{width:46px;height:46px;flex-shrink:0;border:1px solid #a7b8cd;border-radius:50%;background:var(--paper);color:var(--navy);font-size:1.25rem}
+.language-page-controls button:hover{background:#e4edf7}
+.language-page-position{color:var(--muted);font-size:.75rem;text-align:center}
+@media(max-width:480px){.language-explorer[data-enhanced] .language-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.language-page{padding:28px 24px}.language-explorer[data-enhanced] .language-page-stage{min-height:380px}}
+.page-admission .admission-details>.language-explorer{padding:0;background:transparent;color:var(--ink);border-radius:0}
+.page-admission .language-explorer .language-page p{color:var(--muted);font-size:1rem;line-height:1.8}
