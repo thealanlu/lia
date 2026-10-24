@@ -32,7 +32,7 @@ LCA’s public description was checked against its [official page](https://acesc
 - Inquiry category options, default selection, and conditional phone requirement checked.
 - Local form submission confirms the preview message without sending a production inquiry.
 - Reduced-motion banner and legacy `/request-info/` redirect checked.
-- School photo paths/order, opening markup, About mission/vision/story/values, JavaScript interactions, existing form identity/fields, and school contact details compared with the baseline. The only JavaScript changes are the two Netlify endpoint literals.
+- School photo paths/order, opening markup, About mission/vision/story/values, JavaScript interactions, existing form identity/fields, and school contact details compared with the baseline. JavaScript changes restore the working Netlify endpoint and include the chosen category in the existing message field for compatibility with the registered form schema.
 - Read-only HTTP checks found Netlify `/inquire/` returns 404 and `/request-info/` returns 200. The local draft now targets the available handler. A GET/HEAD response does not verify POST collection or email delivery.
 - Source validation, JavaScript syntax, GitHub Pages packaging, and whitespace checks passed.
 
@@ -41,6 +41,6 @@ Screenshots: `output/playwright/language-review-2026-10-24/` (local review artif
 ## Publication checklist
 
 1. Keep the reviewed conditional LCA wording. Obtain school-specific documentation before adding formal partnership, dual-enrollment, or registration claims.
-2. Deploy the approved static form to Netlify so it registers `inquiryCategory`. Local checks cannot confirm production registration, collection, or email delivery.
+2. The Netlify connection repeatedly requested authentication during publication, so a new schema deployment could not be confirmed. The chosen category is included in the existing `message` payload and the unregistered category field is omitted from submission. A later Netlify deployment can register a dedicated category column. Production collection and email delivery have not been tested.
 3. Verify the existing Netlify handler and its confirmation route before a production delivery test. No production form submission or deployment was performed in this review.
 4. Publish the approved website through GitHub Pages and the existing ChatGPT Site workflow, preserving the current audience. Preserve the reviewed source and check each deployment result.

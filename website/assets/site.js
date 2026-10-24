@@ -227,6 +227,14 @@ const form = document.querySelector('#inquiry-form');
 if (form) {
   const phone = form.querySelector('#phone');
   const method = form.querySelector('#contact-method');
+  // Use the established message field until the category schema is registered on the form host.
+  form.addEventListener('formdata', event => {
+    const category = event.formData.get('inquiryCategory');
+    if (!category) return;
+    const message = event.formData.get('message') || '';
+    event.formData.set('message', `Inquiry category: ${category}\n\n${message}`.trim());
+    event.formData.delete('inquiryCategory');
+  });
   const status = document.querySelector('#form-status');
   const button = form.querySelector('button[type="submit"]');
   const syncPhone = () => {
