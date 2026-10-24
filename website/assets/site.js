@@ -474,7 +474,6 @@ const languageExplorer = document.querySelector('[data-language-explorer]');
 if (languageExplorer) {
   const tabs = [...languageExplorer.querySelectorAll('[role=tab]')];
   const pages = [...languageExplorer.querySelectorAll('[role=tabpanel]')];
-  const position = languageExplorer.querySelector('.language-page-position');
   let selected = 0, turn = 0;
   const settlePages = () => pages.forEach((page, index) => {
     page.getAnimations().forEach(animation => animation.cancel());
@@ -483,18 +482,19 @@ if (languageExplorer) {
     page.setAttribute('aria-hidden', String(index !== selected));
   });
   const chooseLanguage = (index, focusTab = false) => {
+    const direction = index > selected ? 1 : -1;
     index = (index + pages.length) % pages.length;
     if (index === selected) { if (focusTab) tabs[index].focus(); return; }
     const previous = selected, thisTurn = ++turn;
     selected = index;
     settlePages();
     tabs.forEach((tab, i) => { tab.setAttribute('aria-selected', String(i === selected)); tab.tabIndex = i === selected ? 0 : -1; });
-    position.textContent = `${pages[selected].querySelector('h3').textContent.trim()} · ${selected + 1} of ${pages.length}`;
     if (focusTab) tabs[selected].focus();
     if (motionPreference.matches || !pages[selected].animate) return;
     pages[previous].hidden = false;
-    const outgoing = pages[previous].animate([{transform:'rotateX(0deg)',opacity:1},{transform:'rotateX(-88deg)',opacity:0}],{duration:220,easing:'cubic-bezier(.4,0,1,1)',fill:'forwards'});
-    const incoming = pages[selected].animate([{transform:'rotateX(88deg)',opacity:0},{transform:'rotateX(0deg)',opacity:1}],{duration:380,delay:160,easing:'cubic-bezier(.16,1,.3,1)',fill:'backwards'});
+    const timing = {duration:460,easing:'cubic-bezier(.22,.7,.25,1)',fill:'both'};
+    const outgoing = pages[previous].animate([{transform:'translateX(0)'},{transform:`translateX(${-direction * 100}%)`}],timing);
+    const incoming = pages[selected].animate([{transform:`translateX(${direction * 100}%)`},{transform:'translateX(0)'}],timing);
     Promise.allSettled([outgoing.finished,incoming.finished]).then(() => { if (turn === thisTurn) settlePages(); });
   };
   languageExplorer.dataset.enhanced = '';
@@ -511,8 +511,6 @@ if (languageExplorer) {
       event.preventDefault(); chooseLanguage(target,true);
     });
   });
-  languageExplorer.querySelector('[data-language-prev]').addEventListener('click', () => chooseLanguage(selected-1));
-  languageExplorer.querySelector('[data-language-next]').addEventListener('click', () => chooseLanguage(selected+1));
   let touchStart, suppressSwipeClick = false;
   const stage = languageExplorer.querySelector('.language-page-stage');
   const sizeLanguagePages = () => {
