@@ -256,7 +256,7 @@ if (form) {
   if (new URLSearchParams(location.search).has('sent')) feedback('Thank you. Your inquiry has been received by LIA.', 'success');
   form.addEventListener('submit', async event => {
     // External static hosts use a normal POST to avoid cross-origin fetch restrictions.
-    if (location.hostname.endsWith('.github.io') || location.hostname.endsWith('.chatgpt.site')) {
+    if (!['localhost', '127.0.0.1'].includes(location.hostname) && new URL(form.action, location.href).origin !== location.origin) {
       form.action = 'https://logos-international-academy.netlify.app/request-info/?sent=1';
       return;
     }

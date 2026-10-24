@@ -67,7 +67,6 @@ GitHub Actions validates changes and publishes `main` to GitHub Pages. The gener
 
 Pushing to `main` runs the validation and **Publish GitHub Pages** workflows. GitHub Pages serves the generated `_site/` output under `/lia/`.
 
-Website changes must also be published to the existing [ChatGPT Site](https://logos-international-academy.thealanlu.chatgpt.site/). Its separate source checkout is maintained outside this repository. Sync `website/` into that checkout’s `dist/`, adjust canonical, social, sitemap, and robots URLs to the ChatGPT Site origin, then publish through Sites. Preserve the existing audience and confirm the deployment succeeds. GitHub Actions does not perform this second publication automatically.
 
 The existing Netlify host supplies inquiry collection. Verify it separately when changing form delivery; publishing to GitHub Pages or Sites does not deploy Netlify.
 
