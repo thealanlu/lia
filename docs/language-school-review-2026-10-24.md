@@ -32,7 +32,7 @@ LCA’s public description was checked against its [official page](https://acesc
 - Inquiry category options, default selection, and conditional phone requirement checked.
 - Local form submission confirms the preview message without sending a production inquiry.
 - Reduced-motion banner and legacy `/request-info/` redirect checked.
-- School photo paths/order, opening markup, About mission/vision/story/values, JavaScript interactions, existing form identity/fields, and school contact details compared with the baseline. JavaScript changes restore the working Netlify endpoint and include the chosen category in the existing message field for compatibility with the registered form schema.
+- School photo paths/order, opening markup, About mission/vision/story/values, JavaScript interactions, existing form identity/fields, and school contact details compared with the baseline. JavaScript changes restore the working Netlify endpoint, use normal form POSTs from GitHub Pages and ChatGPT Site to avoid cross-origin response restrictions, and include the chosen category in the existing message field for compatibility with the registered form schema.
 - Read-only HTTP checks found Netlify `/inquire/` returns 404 and `/request-info/` returns 200. The local draft now targets the available handler. A GET/HEAD response does not verify POST collection or email delivery.
 - Source validation, JavaScript syntax, GitHub Pages packaging, and whitespace checks passed.
 

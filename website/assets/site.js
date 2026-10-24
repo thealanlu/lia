@@ -252,8 +252,8 @@ if (form) {
   };
   if (new URLSearchParams(location.search).has('sent')) feedback('Thank you. Your inquiry has been received by LIA.', 'success');
   form.addEventListener('submit', async event => {
-    // GitHub Pages has no server; a normal POST avoids cross-origin fetch restrictions.
-    if (location.hostname.endsWith('.github.io')) {
+    // External static hosts use a normal POST to avoid cross-origin fetch restrictions.
+    if (location.hostname.endsWith('.github.io') || location.hostname.endsWith('.chatgpt.site')) {
       form.action = 'https://logos-international-academy.netlify.app/request-info/?sent=1';
       return;
     }
