@@ -492,9 +492,9 @@ if (languageExplorer) {
     if (focusTab) tabs[selected].focus();
     if (motionPreference.matches || !pages[selected].animate) return;
     pages[previous].hidden = false;
-    const timing = {duration:460,easing:'cubic-bezier(.22,.7,.25,1)',fill:'both'};
-    const outgoing = pages[previous].animate([{transform:'translateX(0)'},{transform:`translateX(${-direction * 100}%)`}],timing);
-    const incoming = pages[selected].animate([{transform:`translateX(${direction * 100}%)`},{transform:'translateX(0)'}],timing);
+    const timing = {duration:360,easing:'cubic-bezier(.22,.7,.25,1)',fill:'both'};
+    const outgoing = pages[previous].animate([{transform:'translateX(0)',opacity:1},{transform:`translateX(${-direction * 4}%)`,opacity:0}],timing);
+    const incoming = pages[selected].animate([{transform:`translateX(${direction * 4}%)`,opacity:0},{transform:'translateX(0)',opacity:1}],timing);
     Promise.allSettled([outgoing.finished,incoming.finished]).then(() => { if (turn === thisTurn) settlePages(); });
   };
   languageExplorer.dataset.enhanced = '';

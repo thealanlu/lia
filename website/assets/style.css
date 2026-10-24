@@ -781,10 +781,10 @@ html.page-arriving::after{opacity:1;pointer-events:auto;transition:none}
 .page-admission .admission-details>.language-explorer{padding:0;background:transparent;color:var(--ink);border-radius:0}
 .page-admission .language-explorer .language-page p{color:#fff;font-size:1rem;line-height:1.8}
 
-#language-page-english{--country-photo:url("/assets/countries/england.webp")}
-#language-page-thai{--country-photo:url("/assets/countries/thailand.webp")}
-#language-page-korean{--country-photo:url("/assets/countries/korea.webp")}
-#language-page-chinese{--country-photo:url("/assets/countries/china.webp")}
+#language-page-english{--country-photo:url("countries/england.webp")}
+#language-page-thai{--country-photo:url("countries/thailand.webp")}
+#language-page-korean{--country-photo:url("countries/korea.webp")}
+#language-page-chinese{--country-photo:url("countries/china.webp")}
 .language-page .text-link{color:#fff;border-color:#ffffff80;background:#031b3b55}
 .language-page .text-link span{color:#fff;background:transparent}
 .language-page .text-link:hover{color:var(--navy);background:#fff}
@@ -798,3 +798,6 @@ html.page-arriving::after{opacity:1;pointer-events:auto;transition:none}
 .page-admission .lca-partnership{background:#e2ebf5;border-top:5px solid var(--navy)}
 .page-admission .lca-partnership .pathway-label{color:var(--navy);border-color:#052c6030}
 .page-admission .lca-content{gap:clamp(28px,4vw,60px)}
+
+.language-explorer[data-enhanced]{display:flex;flex-direction:column}
+.language-explorer[data-enhanced] .language-page-stage{flex:1}
