@@ -19,6 +19,6 @@ for p in target.rglob('*'):
 shutil.copyfile(Path('scripts/tracking-github.js'), target/'assets/lia-intelligence.js')
 for page in target.rglob('*.html'):
     markup=page.read_text()
-    markup=markup.replace('</head>', '<script src="/lia/assets/lia-intelligence.js?v=20261029" defer></script></head>')
+    markup=markup.replace('</head>', '<script src="/lia/assets/lia-intelligence.js?v=20261029b" defer></script></head>')
     page.write_text(markup)
 (target/'.nojekyll').touch()
