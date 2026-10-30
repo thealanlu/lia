@@ -4,7 +4,7 @@
   const HOST='thealanlu.github.io',PATHS=['/lia/','/lia/about/','/lia/admission/','/lia/inquire/','/lia/request-info/','/lia/serve/'];
   if(location.hostname!==HOST||!PATHS.includes(location.pathname))return;
   if(navigator.doNotTrack==='1'||navigator.globalPrivacyControl===true){root.dataset.liaAnalytics='privacy-disabled';return;}
-  const endpoint='https://lia-traffic-endpoint.thealanlu.chatgpt.site/collect';
+  const endpoint='https://lia-intelligence.thealanlu.chatgpt.site/collect';
   const uid=()=>crypto.randomUUID(),pageId=uid(),engagementId=uid(),performanceId=uid(),pagePath=location.pathname;
   const round=(n,step)=>Math.round(n/step)*step;
   const tag=v=>typeof v==='string'&&/^[a-z0-9][a-z0-9_. -]{0,49}$/i.test(v)&&!/^\d{8,}$/.test(v)?v.trim().replace(/\s+/g,'-'):'';
