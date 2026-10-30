@@ -15,4 +15,10 @@ for p in target.rglob('*'):
         else:
             s=s.replace("url('/assets/","url('/lia/assets/")
         p.write_text(s)
+# Tracking is injected only into GitHub Pages output, never the shared website source.
+shutil.copyfile(Path('scripts/tracking-github.js'), target/'assets/lia-intelligence.js')
+for page in target.rglob('*.html'):
+    markup=page.read_text()
+    markup=markup.replace('</head>', '<script src="/lia/assets/lia-intelligence.js?v=20261030" defer></script></head>')
+    page.write_text(markup)
 (target/'.nojekyll').touch()
