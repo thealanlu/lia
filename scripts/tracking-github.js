@@ -3,6 +3,9 @@
   const root=document.documentElement;
   const HOST='thealanlu.github.io',PATHS=['/lia/','/lia/about/','/lia/admission/','/lia/inquire/','/lia/request-info/','/lia/serve/'];
   if(location.hostname!==HOST||!PATHS.includes(location.pathname))return;
+  // This preference is local to this browser; it is never a visitor identifier.
+  const exclusion=new URLSearchParams(location.search).get('lia_tracking');
+  try{if(exclusion==='exclude')localStorage.setItem('lia-exclude-self','1');if(exclusion==='include')localStorage.removeItem('lia-exclude-self');if(exclusion){const clean=new URL(location.href);clean.searchParams.delete('lia_tracking');history.replaceState(null,'',clean.pathname+clean.search+clean.hash)}if(localStorage.getItem('lia-exclude-self')==='1'){root.dataset.liaAnalytics='owner-excluded';return}}catch{}
   if(navigator.doNotTrack==='1'||navigator.globalPrivacyControl===true){root.dataset.liaAnalytics='privacy-disabled';return;}
   const endpoint='https://lia-intelligence.thealanlu.chatgpt.site/collect';
   const uid=()=>crypto.randomUUID(),pageId=uid(),engagementId=uid(),performanceId=uid(),pagePath=location.pathname;
@@ -37,6 +40,8 @@
   addEventListener('scroll',()=>{if(!viewed||performance.now()-lastScroll<200)return;lastScroll=performance.now();depth();for(const threshold of [25,50,75,90,100])if(maxScroll>=threshold&&!milestones.has(threshold)){milestones.add(threshold);send('scroll_depth',{scrollPercent:threshold})}},{passive:true});
   document.addEventListener('pointerdown',()=>{hadInput=true},{passive:true});document.addEventListener('keydown',()=>{hadInput=true},{passive:true});
   document.addEventListener('click',e=>{const a=e.target.closest('a[href]');if(!a)return;try{const u=new URL(a.href);if(['mailto:','tel:'].includes(u.protocol))send('contact_click',{actionKey:u.protocol==='mailto:'?'email':'phone'});else if(u.origin===location.origin&&PATHS.includes(u.pathname)){if(u.pathname!==pagePath)send('navigation_click',{targetPath:u.pathname,actionKey:u.pathname==='/lia/inquire/'?'inquire':'navigation'});else if(/^#[a-z0-9_-]{1,40}$/i.test(u.hash))send('anchor_click',{actionKey:'section',targetKey:u.hash.slice(1)})}else if(u.protocol==='https:')send('outbound_click',{targetHost:u.hostname,actionKey:u.hostname==='maps.app.goo.gl'?'map':'outbound'});}catch{}});
+  const inquiryForm=document.querySelector('#inquiry-form');
+  if(inquiryForm){for(const [name,value]of Object.entries({'lia-source':'github-pages','lia-session':session(),'lia-page-id':pageId})){let field=inquiryForm.querySelector('[name="'+name+'"]');if(!field){field=document.createElement('input');field.type='hidden';field.name=name;inquiryForm.append(field)}field.value=value}}
   let formStarted=false,lastInvalid=0;
   document.addEventListener('focusin',e=>{if(!formStarted&&e.target.closest('form')&&['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName)){formStarted=true;send('inquiry_start',{actionKey:'form-start'})}});
   document.addEventListener('submit',e=>{if(e.target.matches('form'))send('form_submit',{actionKey:'form-attempt'})},true);
