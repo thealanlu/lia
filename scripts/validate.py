@@ -9,7 +9,8 @@ site = root / "website"
 expected = {"index.html", "admission/index.html", "inquire/index.html", "request-info/index.html", "serve/index.html", "about/index.html"}
 assert {str(p.relative_to(site)) for p in site.rglob("*.html")} == expected
 config = (root / "netlify.toml").read_text()
-assert 'publish = "website"' in config
+assert 'publish = ".netlify-public"' in config
+assert 'command = "python3 scripts/build-netlify.py"' in config
 assert "[[redirects]]" not in config, "Keep direct Netlify hosting; no forwarding proxy"
 
 class Links(HTMLParser):

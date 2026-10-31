@@ -1,5 +1,6 @@
 [build]
-  publish = "website"
+  command = "python3 scripts/build-netlify.py"
+  publish = ".netlify-public"
 
 [[headers]]
   for = "/*"
